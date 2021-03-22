@@ -1,4 +1,4 @@
-enum class Unit(multiplier: Long) {
+enum class Unit(val multiplier: Long) {
     OHMS(1),
     KILOOHMS(1_000),
     MEGAOHMS(1_000_000),
