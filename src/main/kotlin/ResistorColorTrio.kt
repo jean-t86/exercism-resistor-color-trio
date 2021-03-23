@@ -13,10 +13,16 @@ object ResistorColorTrio {
             strBuilder.append("0")
         }
 
+        // The ohms variable contains the decoded colors in a Long variable, e.g. 685
         val ohms = strBuilder.toString().toLong()
+        val (unit: String, ohmsWithUnit: Double) = convertOhmsToAppropriateUnit(ohms)
+
+        return "${ohmsWithUnit.toInt()} $unit"
+    }
+
+    private fun convertOhmsToAppropriateUnit(ohms: Long): Pair<String, Double> {
         val unit: String
-        val ohmsWithUnit: Double
-        ohmsWithUnit = when (ohms) {
+        val ohmsWithUnit: Double = when (ohms) {
             in Unit.OHMS.multiplier..Unit.KILOOHMS.multiplier -> {
                 unit = "ohms"
                 ohms * 1.0
@@ -42,12 +48,6 @@ object ResistorColorTrio {
                 ohms / Unit.EXAOHMS.multiplier * 1.0
             }
         }
-
-        return "${ohmsWithUnit.toInt()} $unit"
+        return Pair(unit, ohmsWithUnit)
     }
-}
-
-fun main() {
-    ResistorColorTrio.text(Color.ORANGE, Color.BLUE, Color.WHITE)
-    println()
 }
